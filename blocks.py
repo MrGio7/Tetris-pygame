@@ -12,6 +12,7 @@ class Blocks(Window):
         self.block5 = []
         self.block6 = []
         self.block7 = []
+        self.update = 0
 
     def block_init(self):
         for i in range(4):
@@ -25,7 +26,10 @@ class Blocks(Window):
                 pygame.draw.rect(self.screen, self.BLUE, [ch[0], ch[1], self.size - 1, self.size - 1], width=0)
 
     def block_drop(self):
-        for obj in self.blocks:
-            for ch in obj:
-                if ch[1] < self.height - self.size:
-                    ch[1] += self.size
+        self.update += 1
+        if self.update > 10:
+            for obj in self.blocks:
+                for ch in obj:
+                    if ch[1] < self.height - self.size:
+                        ch[1] += self.size
+            self.update = 0
