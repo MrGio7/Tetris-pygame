@@ -18,7 +18,6 @@ while loop:
     
     pygame.display.set_caption("Tetris By MrGio7")
 
-    
     blocks.draw_bg()
     blocks.block_draw()
     blocks.block_drop()
