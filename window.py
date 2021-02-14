@@ -3,9 +3,10 @@ import pygame
 class Window:
     def __init__(self):
         self.width = 400
-        self.heigth = 800
+        self.height = 800
         self.rows = 20
         self.columns = 10
+        self.size = 40
         self.WHITE = (255, 255, 255)
         self.RED = (255, 0, 0)
         self.YELLOW = (255, 255, 0)
@@ -15,11 +16,11 @@ class Window:
         self.PINK = (255, 0, 255)
         self.BLACK = (0, 0, 0)
         self.GREY = (100, 100, 100)
-        self.screen = pygame.display.set_mode((self.width, self.heigth))
+        self.screen = pygame.display.set_mode((self.width, self.height))
 
     def draw_bg(self):
         self.screen.fill(self.BLACK)
         for i in range(self.rows):
-           pygame.draw.line(self.screen, self.GREY, (0, i*self.heigth/self.rows), (self.width, i*self.heigth/self.rows), width=1)
+           pygame.draw.line(self.screen, self.GREY, (0, i*self.height/self.rows), (self.width, i*self.height/self.rows), width=1)
         for i in range(self.columns):
-            pygame.draw.line(self.screen, self.GREY, (i*self.heigth/self.rows, 0), (i*self.heigth/self.rows, self.heigth), width=1)
+            pygame.draw.line(self.screen, self.GREY, (i*self.height/self.rows, 0), (i*self.height/self.rows, self.height), width=1)

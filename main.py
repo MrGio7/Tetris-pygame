@@ -1,10 +1,12 @@
 import pygame
-from window import Window
+from blocks import Blocks
 
 pygame.init()
 
-window = Window()
+blocks = Blocks()
 
+blocks.block_init()
+print(blocks.blocks)
 loop = True
 while loop:
     for e in pygame.event.get():
@@ -13,6 +15,9 @@ while loop:
     
     pygame.display.set_caption("Tetris By MrGio7")
 
-    window.draw_bg()
+    
+    blocks.draw_bg()
+    blocks.block_draw()
+    blocks.block_drop()
 
     pygame.display.flip()
