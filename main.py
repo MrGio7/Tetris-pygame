@@ -7,8 +7,11 @@ blocks = Blocks()
 
 blocks.block_init()
 print(blocks.blocks)
+
+clock = pygame.time.Clock()
 loop = True
 while loop:
+    clock.tick(60)
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             loop = False
