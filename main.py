@@ -5,9 +5,6 @@ pygame.init()
 
 blocks = Blocks()
 
-blocks.block_init()
-print(blocks.blocks)
-
 clock = pygame.time.Clock()
 loop = True
 while loop:
@@ -20,6 +17,5 @@ while loop:
 
     blocks.draw_bg()
     blocks.block_draw()
-    blocks.block_drop()
 
     pygame.display.flip()
