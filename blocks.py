@@ -23,46 +23,52 @@ class Blocks(Window):
         ]
         self.random_shape = random.randint(0, int(len(self.shape) - 1))
         self.random_figure = random.randint(0, int(len(self.shape[self.random_shape]) - 1))
+        self.posx = 0
+        self.posy = 0
         self.block = []
         self.valid_space = []
         self.update = 0
         self.response = 0
         self.rotation = 0
+        self.border = False
 
     def block_rotation(self):
         self.rotation = self.rotation % len(self.shape[self.random_shape])
-
-    def block_init(self):
-        for i in self.shape[self.random_shape][self.rotation]:
-                    for row in self.matrix:
-                        if i in row:
-                            posx = self.size*row.index(i)
-                            posy = self.size*self.matrix.index(row)
-                            self.block.append([posx, posy])
 
     def valid_sp(self):
         pass
 
     def block_draw(self):
         for i in self.shape[self.random_shape][self.rotation]:
-                    for row in self.matrix:
-                        if i in row:
-                            posx = self.size*row.index(i)
-                            posy = self.size*self.matrix.index(row)
-                            self.block.append([posx, posy])
-        for cor in self.block:
-            pygame.draw.rect(self.screen, self.BLUE, [cor[0], cor[1], self.size - 1, self.size - 1], width=0)
+            for row in self.matrix:
+                if i in row:
+                    posx = self.size*row.index(i)
+                    posy = self.size*self.matrix.index(row)
+                    self.block.append([posx + self.posx, posy + self.posy])
+                    if len(self.block) > 4:
+                        self.block.pop(0)
+                    pygame.draw.rect(self.screen, self.BLUE, [posx + self.posx, posy + self.posy, self.size - 1, self.size - 1], width=0)
 
     def block_drop(self):
         key = pygame.key.get_pressed()
 
         self.response += 1
         if key[K_LEFT]:
-            if self.response > 5 and self.posx > 0:
+            space = True
+            for cor in self.block:
+                if ([cor[0] - self.size, cor[1]]) in self.bg:
+                    space = False
+
+            if self.response > 5 and space:
                 self.posx -= self.size
                     
         if key[K_RIGHT]:
-            if self.response > 5 and self.posx < self.width - self.size:
+            space = True
+            for cor in self.block:
+                if ([cor[0] + self.size, cor[1]]) in self.bg:
+                    space = False
+                    
+            if self.response > 5 and space:
                 self.posx += self.size
         
         if key[K_UP]:
@@ -74,22 +80,21 @@ class Blocks(Window):
             self.response = 0
 
         self.update += 1
-
-        contains = False
         for cor in self.block:
             if ([cor[0], cor[1] + self.size]) in self.bg:
-                contains = True
+                self.border = True
 
-        if contains:
+        if self.border:
             for cor in self.block:
                 self.bg.append(cor)
             self.block = []
             self.random_shape = random.randint(0, int(len(self.shape) - 1))
             self.random_figure = random.randint(0, int(len(self.shape[self.random_shape]) - 1))
-            self.block_init()
-            contains = False
+            self.posy = 0
+            self.posx = 0
+            self.border = False
 
         if self.update > 10:  
-            for cor in self.block:
-                cor[1] += self.size
-                self.update = 0
+            self.posy += self.size
+            self.update = 0
+            print(f"BG: {self.block}")
