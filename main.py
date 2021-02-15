@@ -4,6 +4,7 @@ from blocks import Blocks
 pygame.init()
 
 blocks = Blocks()
+blocks.bg_init()
 
 clock = pygame.time.Clock()
 loop = True
@@ -15,6 +16,8 @@ while loop:
     
     pygame.display.set_caption("Tetris By MrGio7")
 
+    blocks.block_drop()
+    blocks.draw_grid()
     blocks.draw_bg()
     blocks.block_draw()
 
