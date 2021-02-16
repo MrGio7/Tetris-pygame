@@ -53,7 +53,7 @@ class Blocks(Window):
             self.response += 1
             count = 0
             for cor in self.block:
-                if cor[0] < self.size:
+                if cor[0] < self.size or ([cor[0] - self.size, cor[1]]) in self.bg or ([cor[0] - self.size, cor[1] + self.size]) in self.bg:
                     count += 1
             if count == 0 and self.response > 5:
                 self.posx -= self.size
@@ -63,7 +63,7 @@ class Blocks(Window):
             self.response += 1
             count = 0
             for cor in self.block:
-                if cor[0] >= (self.width - self.size):
+                if cor[0] >= (self.width - self.size) or ([cor[0] + self.size, cor[1]]) in self.bg or ([cor[0] + self.size, cor[1] + self.size]) in self.bg:
                     count += 1
             if count == 0 and self.response > 5:
                 self.posx += self.size
@@ -104,7 +104,7 @@ class Blocks(Window):
             for cor in self.bg:
                 if i*self.size == cor[1]:
                     y += 1
-                if y == 10 and cor[1]:
-                    for coor in self.bg:
-                        if cor[1] == coor[1]:
-                            self.bg.remove(coor)
+            if y == 10 and cor[1]:
+                for coor in self.bg:
+                    if cor[1] == coor[1]:
+                        self.bg.remove(coor)
