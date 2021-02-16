@@ -33,7 +33,7 @@ class Blocks(Window):
         self.border = False
 
     def block_rotation(self):
-        self.rotation = self.rotation % len(self.shape[self.random_shape])
+        self.rotation = self.rotation % (len(self.shape[self.random_shape]))
 
     def valid_sp(self):
         pass
@@ -92,9 +92,9 @@ class Blocks(Window):
             self.random_figure = random.randint(0, int(len(self.shape[self.random_shape]) - 1))
             self.posy = 0
             self.posx = 0
+            self.block_rotation()
             self.border = False
 
         if self.update > 10:  
             self.posy += self.size
             self.update = 0
-            print(f"BG: {self.block}")
