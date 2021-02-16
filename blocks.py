@@ -26,7 +26,6 @@ class Blocks(Window):
         self.posx = 0
         self.posy = 0
         self.block = []
-        self.valid_space = []
         self.update = 0
         self.response = 0
         self.rotation = 0
@@ -34,9 +33,6 @@ class Blocks(Window):
 
     def block_rotation(self):
         self.rotation = self.rotation % (len(self.shape[self.random_shape]))
-
-    def valid_sp(self):
-        pass
 
     def block_draw(self):
         for i in self.shape[self.random_shape][self.rotation]:
@@ -47,31 +43,34 @@ class Blocks(Window):
                     self.block.append([posx + self.posx, posy + self.posy])
                     if len(self.block) > 4:
                         self.block.pop(0)
-                    pygame.draw.rect(self.screen, self.BLUE, [posx + self.posx, posy + self.posy, self.size - 1, self.size - 1], width=0)
+        for cor in self.block:
+            pygame.draw.rect(self.screen, self.BLUE, [cor[0], cor[1], self.size - 1, self.size - 1], width=0)
 
     def block_drop(self):
         key = pygame.key.get_pressed()
-
-        self.response += 1
-        if key[K_LEFT]:
-            space = True
-            for cor in self.block:
-                if ([cor[0] - self.size, cor[1]]) in self.bg:
-                    space = False
-
-            if self.response > 5 and space:
-                self.posx -= self.size
-                    
-        if key[K_RIGHT]:
-            space = True
-            for cor in self.block:
-                if ([cor[0] + self.size, cor[1]]) in self.bg:
-                    space = False
-                    
-            if self.response > 5 and space:
-                self.posx += self.size
         
+        if key[K_LEFT]:
+            self.response += 1
+            count = 0
+            for cor in self.block:
+                if cor[0] < self.size:
+                    count += 1
+            if count == 0 and self.response > 5:
+                self.posx -= self.size
+                self.response = 0
+
+        if key[K_RIGHT]:
+            self.response += 1
+            count = 0
+            for cor in self.block:
+                if cor[0] >= (self.width - self.size):
+                    count += 1
+            if count == 0 and self.response > 5:
+                self.posx += self.size
+                self.response = 0
+
         if key[K_UP]:
+            self.response += 1
             if self.response > 5:
                 self.rotation += 1
                 self.block_rotation()
@@ -81,7 +80,7 @@ class Blocks(Window):
 
         self.update += 1
         for cor in self.block:
-            if ([cor[0], cor[1] + self.size]) in self.bg:
+            if ([cor[0], cor[1] + self.size]) in self.bg or cor[1] >= (self.height - self.size):
                 self.border = True
 
         if self.border:
@@ -98,3 +97,14 @@ class Blocks(Window):
         if self.update > 10:  
             self.posy += self.size
             self.update = 0
+
+    def line_pop(self):
+        for i in range(self.rows):
+            y = 0
+            for cor in self.bg:
+                if i*self.size == cor[1]:
+                    y += 1
+                if y == 10 and cor[1]:
+                    for coor in self.bg:
+                        if cor[1] == coor[1]:
+                            self.bg.remove(coor)

@@ -19,15 +19,8 @@ class Window:
         self.GREY = (100, 100, 100)
         self.screen = pygame.display.set_mode((self.width, self.height))
 
-    def bg_init(self):
-        for i in range(self.columns):
-            self.bg.append([i*self.size, self.height])
-        for i in range(self.rows):
-            self.bg.append([-self.size, i*self.size])
-            self.bg.append([self.width, i*self.size])
-
     def draw_bg(self):
-        if len(self.bg) > 2:
+        if len(self.bg) > 0:
             for cor in self.bg:
                 pygame.draw.rect(self.screen, self.RED, [cor[0], cor[1], self.size - 1, self.size - 1], width=0)
 
