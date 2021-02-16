@@ -104,7 +104,12 @@ class Blocks(Window):
             for cor in self.bg:
                 if i*self.size == cor[1]:
                     y += 1
-            if y == 10 and cor[1]:
-                for coor in self.bg:
-                    if cor[1] == coor[1]:
-                        self.bg.remove(coor)
+                if y == 10:
+                    cpy = self.bg.copy()
+                    self.bg.clear()
+                    for coor in cpy:
+                        if cor[1] != coor[1]:
+                            if coor[1] < cor[1]:
+                                self.bg.append([coor[0], (coor[1] + self.size)])
+                            if coor[1] > cor[1]:
+                                self.bg.append(coor)
