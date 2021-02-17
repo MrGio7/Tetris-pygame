@@ -18,6 +18,7 @@ class Window:
         self.BLACK = (0, 0, 0)
         self.GREY = (100, 100, 100)
         self.screen = pygame.display.set_mode((self.width, self.height))
+        self.state = "Menu"
 
     def draw_bg(self):
         if len(self.bg) > 0:
