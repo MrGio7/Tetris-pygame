@@ -1,6 +1,6 @@
 import pygame
 
-class Window:
+class Window(object):
     def __init__(self):
         self.width = 400
         self.height = 800

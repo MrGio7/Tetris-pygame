@@ -1,9 +1,9 @@
 import pygame
 import random
 from pygame.constants import K_LEFT, K_RIGHT, K_UP
-from window import Window
+from menu import Menu
 
-class Blocks(Window):
+class Blocks(Menu):
     def __init__(self):
         super().__init__()
         self.shape = [
@@ -94,7 +94,7 @@ class Blocks(Window):
             self.block_rotation()
             self.border = False
 
-        if self.update > 10:  
+        if self.update > self.fps:  
             self.posy += self.size
             self.update = 0
 

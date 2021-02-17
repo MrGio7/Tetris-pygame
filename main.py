@@ -5,7 +5,6 @@ from menu import Menu
 pygame.init()
 
 blocks = Blocks()
-menu = Menu()
 
 clock = pygame.time.Clock()
 loop = True
@@ -17,15 +16,18 @@ while loop:
     
     pygame.display.set_caption("Tetris By MrGio7")
 
-    if menu.state == "Menu":
-        menu.text("Menu", 160, menu.WHITE, 50)
-        menu.text("START", 100, menu.GREEN, 350)
-        menu.click("Game")
-        menu.text("Choose Difficulty:", 50, menu.WHITE, 550)
-        menu.text("Easy", 35, menu.WHITE, 600)
-        menu.text("Medium", 35, menu.WHITE, 650)
-        menu.text("Hard", 35, menu.WHITE, 700)
-    elif menu.state == "Game":
+    if blocks.state == "Menu":
+        blocks.text("Menu", 160, blocks.WHITE, 50)
+        blocks.text("START", 100, blocks.GREEN, 350)
+        blocks.start("Game")
+        blocks.text("Choose Difficulty:", 50, blocks.WHITE, 550)
+        blocks.text("Easy", 35, blocks.WHITE, 600)
+        blocks.dif_choose("Easy")
+        blocks.text("Medium", 35, blocks.WHITE, 650)
+        blocks.dif_choose("Medium")
+        blocks.text("Hard", 35, blocks.WHITE, 700)
+        blocks.dif_choose("Hard")
+    elif blocks.state == "Game":
         blocks.draw_grid()
         blocks.draw_bg()
         blocks.block_drop()
