@@ -71,7 +71,21 @@ class Blocks(Menu):
 
         if key[K_UP]:
             self.response += 1
-            if self.response > 5:
+            count = 0
+            for cor in self.block:
+                if cor[0] == 0:
+                    count += 1
+                elif cor[0] == (self.width - self.size):
+                    count -= 1
+            if self.response > 5 and count > 0:
+                self.posx += self.size
+                self.rotation += 1
+                self.block_rotation()
+            elif self.response > 5 and count < 0:
+                self.posx -= self.size
+                self.rotation += 1
+                self.block_rotation()
+            elif self.response > 5 and count == 0:
                 self.rotation += 1
                 self.block_rotation()
 
