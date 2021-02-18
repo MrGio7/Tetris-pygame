@@ -1,6 +1,6 @@
 import pygame
 import random
-from pygame.constants import K_LEFT, K_RIGHT, K_UP
+from pygame.constants import K_DOWN, K_LEFT, K_RIGHT, K_UP
 from menu import Menu
 
 class Blocks(Menu):
@@ -93,6 +93,12 @@ class Blocks(Menu):
                 self.rotation += 1
                 self.block_rotation()
 
+        if key[K_DOWN]:
+            self.response += 1
+            if self.response > 5:
+                self.posy += self.size
+                self.response = 0
+                
         if self.response > 5:
             self.response = 0
 
