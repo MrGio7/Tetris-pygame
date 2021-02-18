@@ -1,9 +1,9 @@
 import pygame
 import random
 from pygame.constants import K_DOWN, K_LEFT, K_RIGHT, K_UP
-from menu import Menu
+from window import Window
 
-class Blocks(Menu):
+class Blocks(Window):
     def __init__(self):
         super().__init__()
         self.shape = [
@@ -30,6 +30,7 @@ class Blocks(Menu):
         self.response = 0
         self.rotation = 0
         self.border = False
+        self.fps = 20
 
     def block_rotation(self):
         self.rotation = self.rotation % (len(self.shape[self.random_shape]))
@@ -98,7 +99,7 @@ class Blocks(Menu):
             if self.response > 5:
                 self.posy += self.size
                 self.response = 0
-                
+
         if self.response > 5:
             self.response = 0
 
@@ -109,7 +110,10 @@ class Blocks(Menu):
 
         if self.border:
             for cor in self.block:
-                self.bg.append(cor)
+                if cor[1] < self.size*3:
+                    self.state = "GameOver"
+                else:
+                    self.bg.append(cor)
             self.block = []
             self.random_shape = random.randint(0, int(len(self.shape) - 1))
             self.random_figure = random.randint(0, int(len(self.shape[self.random_shape]) - 1))
@@ -132,6 +136,7 @@ class Blocks(Menu):
                     cpy = self.bg.copy()
                     self.bg.clear()
                     for coor in cpy:
+                        self.score += 1
                         if cor[1] != coor[1]:
                             if coor[1] < cor[1]:
                                 self.bg.append([coor[0], (coor[1] + self.size)])
