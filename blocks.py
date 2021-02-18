@@ -77,15 +77,19 @@ class Blocks(Menu):
                     count += 1
                 elif cor[0] == (self.width - self.size):
                     count -= 1
-            if self.response > 5 and count > 0:
+            if self.response > 5 and count > 2:
                 self.posx += self.size
                 self.rotation += 1
                 self.block_rotation()
-            elif self.response > 5 and count < 0:
+            elif self.response > 5 and count == -2:
                 self.posx -= self.size
                 self.rotation += 1
                 self.block_rotation()
-            elif self.response > 5 and count == 0:
+            elif self.response > 5 and count < -2:
+                self.posx -= self.size*2
+                self.rotation += 1
+                self.block_rotation()
+            elif self.response > 5 and (count == 0 or count == 1 or count == 2 or count == -1 or count == -2):
                 self.rotation += 1
                 self.block_rotation()
 
